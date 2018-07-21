@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    private $league;
     /**
      * Create a new controller instance.
      *
@@ -16,6 +17,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->league = new LeagueController();
     }
 
     /**
@@ -25,7 +27,14 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $recuperou = false;
+        if (empty(Auth::user()->league_id)) {
+            $league = $this->league->getUserId(Auth::user()->name);
+            if ($league["status"] == LeagueController::RESULTADO_OK) {
+                $recuperou = true;
+            }
+        }
         broadcast(new UserConnected(Auth::user()));
-        return view('home');
+        return view('home', ['recuperou' => $recuperou]);
     }
 }

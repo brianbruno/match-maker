@@ -16,7 +16,9 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('queue.{queueId}', function ($user, $queueId) {
+    $league = new \App\Http\Controllers\LeagueController();
     if ($user->canJoinRoom($queueId)) {
-        return ['id' => $user->id, 'name' => $user->name];
+        $rank = $league->getRank();
+        return ['id' => $user->id, 'name' => $user->name, 'rank' => $rank];
     }
 });

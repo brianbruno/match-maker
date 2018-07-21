@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\LeagueController;
+use App\Rules\ValidUsername;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -50,7 +52,8 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'username' => ['required', 'string', new ValidUsername($data['username'])],
+            'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -63,10 +66,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $leagueInfo = new LeagueController();
+        $result = $leagueInfo->getUserInfo($data['username']);
+
+        if ($result != null) {
+            return User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'league_id'             => $result->id,
+                'league_accountid'      => $result->accountId,
+                'league_name'           => $result->name,
+                'league_profileiconid'  => $result->profileIconId,
+                'league_summonerlevel'  => $result->summonerLevel,
+            ]);
+        } else {
+            return null;
+        }
     }
 }

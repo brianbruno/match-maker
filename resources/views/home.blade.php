@@ -14,6 +14,11 @@
                         </div>
                     @endif
 
+                    @if (isset($recuperou) && $recuperou)
+                        <div class="alert alert-success" role="alert">
+                            Os dados de sua conta de League acabaram de ser atualizados!
+                        </div>
+                    @endif
                     <queue></queue>
                 </div>
             </div>

@@ -52,8 +52,8 @@ class UserConnected implements ShouldBroadcast
      *
      * @return array
      */
-//    public function broadcastWith()
-//    {
-//        return ['name' => $this->user];
-//    }
+    public function broadcastWith()
+    {
+        return ['usuario' => $this->user];
+    }
 }

@@ -52596,6 +52596,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -52637,7 +52639,9 @@ var render = function() {
           return _c("tr", [
             _c("th", { attrs: { scope: "row" } }, [_vm._v(_vm._s(usuario.id))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(usuario.name))])
+            _c("td", [_vm._v(_vm._s(usuario.name))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(usuario.rank))])
           ])
         })
       )
@@ -52653,7 +52657,9 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Nome")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Nome")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Rank")])
       ])
     ])
   }

@@ -5,12 +5,14 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
+                <th scope="col">Rank</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="usuario in usuarios">
                 <th scope="row">{{ usuario.id }}</th>
                 <td>{{ usuario.name }}</td>
+                <td>{{ usuario.rank }}</td>
             </tr>
             </tbody>
         </table>
