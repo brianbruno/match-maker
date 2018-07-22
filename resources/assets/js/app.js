@@ -17,6 +17,7 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('queue',             require('./components/Queue.vue'));
+Vue.component('new-match',         require('./components/NewMatch.vue'));
 
 const app = new Vue({
     el: '#app'

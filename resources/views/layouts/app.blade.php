@@ -48,6 +48,7 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @else
+                            <li><img src="http://ddragon.leagueoflegends.com/cdn/8.14.1/img/profileicon/{{ Auth::user()->league_profileiconid }}.png" style="width: auto; height: 35px;"class="rounded img-fluid" alt="{{ Auth::user()->name }}"></li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

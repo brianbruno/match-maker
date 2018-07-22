@@ -19,11 +19,10 @@ class LeagueController extends Controller
     const RESULTADO_OK   = "1";
     const RESULTADO_FAIL = "2";
 
-    private $user;
 
     public function __construct()
     {
-        $this->user = Auth::user();
+        //
     }
 
     public function getUserId($name) {
@@ -37,13 +36,13 @@ class LeagueController extends Controller
         $userInfo = $this->getUserInfo($name);
 
         if ($userInfo != null) {
-            $this->user->league_id            = $userInfo->id;
-            $this->user->league_accountid     = $userInfo->accountId;
-            $this->user->league_name          = $userInfo->name;
-            $this->user->league_profileiconid = $userInfo->profileIconId;
-            $this->user->league_summonerlevel = $userInfo->summonerLevel;
+            $user->league_id            = $userInfo->id;
+            $user->league_accountid     = $userInfo->accountId;
+            $user->league_name          = $userInfo->name;
+            $user->league_profileiconid = $userInfo->profileIconId;
+            $user->league_summonerlevel = $userInfo->summonerLevel;
 
-            $this->user->save();
+            $user->save();
             $retorno["status"] = self::RESULTADO_OK;
         } else {
             $retorno["status"] = self::RESULTADO_FAIL;
@@ -79,7 +78,8 @@ class LeagueController extends Controller
 
     public function getRank() {
         $response = null;
-        $url = self::BASE_URL . "/league/v3/positions/by-summoner/" . $this->user->league_id;
+        $user = Auth::user();
+        $url = self::BASE_URL . "/league/v3/positions/by-summoner/" . $user->league_id;
         $headers = ['headers' => [
             'Origin' => 'http://match.maker',
             'Accept-Charset' => 'application/x-www-form-urlencoded; charset=UTF-8',

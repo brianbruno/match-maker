@@ -1,16 +1,17 @@
 <template>
     <div class="card-body">
-        <table class="table">
+        <h1 class="text-center">
+            {{ usuarios.length }}
+        </h1>
+        <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col">#</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Rank</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="usuario in usuarios">
-                <th scope="row">{{ usuario.id }}</th>
                 <td>{{ usuario.name }}</td>
                 <td>{{ usuario.rank }}</td>
             </tr>

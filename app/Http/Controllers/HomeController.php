@@ -28,7 +28,7 @@ class HomeController extends Controller
     public function index()
     {
         $recuperou = false;
-        if (empty(Auth::user()->league_id)) {
+        if (empty(Auth::user()->league_profileiconid) || empty(Auth::user()->league_summonerlevel)) {
             $league = $this->league->getUserId(Auth::user()->name);
             if ($league["status"] == LeagueController::RESULTADO_OK) {
                 $recuperou = true;
