@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\UserRank;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
 
@@ -79,6 +80,52 @@ class LeagueController extends Controller
     public function getRank() {
         $response = null;
         $user = Auth::user();
+        $ranks = UserRank::find($user->league_id);
+        if (sizeof($ranks) == 0) {
+            $ranks = Auth::user()->retrieveRank();
+            foreach ($ranks as $queue) {
+                $user_rank = new UserRank();
+                $rank = [
+                    'league_id' => $queue->playerOrTeamId,
+                    'leagueName' => $queue->leagueName,
+                    'tier' => $queue->tier,
+                    'queueType' => $queue->queueType,
+                    'rank' => $queue->rank,
+                    'leaguePoints' => $queue->leaguePoints,
+                    'wins' => $queue->wins,
+                    'losses' => $queue->losses,
+                    'veteran' => $queue->veteran,
+                    'inactive' => $queue->inactive,
+                    'freshBlood' => $queue->freshBlood,
+                    'hotStreak' => $queue->hotStreak,
+                ];
+                $user_rank->league_id       = $rank['league_id'];
+                $user_rank->leagueName      = $rank['leagueName'];
+                $user_rank->tier            = $rank['tier'];
+                $user_rank->rank            = $rank['rank'];
+                $user_rank->leaguePoints    = $rank['leaguePoints'];
+                $user_rank->wins            = $rank['wins'];
+                $user_rank->losses          = $rank['losses'];
+                $user_rank->veteran         = $rank['veteran'];
+                $user_rank->inactive        = $rank['inactive'];
+                $user_rank->freshBlood      = $rank['freshBlood'];
+                $user_rank->hotStreak       = $rank['hotStreak'];
+                $user_rank->queueType       = $rank['queueType'];
+
+                $user->ranks()->save($user_rank);
+            }
+        }
+        if(sizeof($ranks) > 0) {
+            $response = $ranks->tier." ".$ranks->rank;
+        } else {
+            $response = null;
+        }
+        return $response;
+    }
+
+    private function retrieveRank() {
+        $user = Auth::user();
+
         $url = self::BASE_URL . "/league/v3/positions/by-summoner/" . $user->league_id;
         $headers = ['headers' => [
             'Origin' => 'http://match.maker',
@@ -94,9 +141,7 @@ class LeagueController extends Controller
 
             if ($response->getStatusCode() == 200) {
                 $response = json_decode($response->getBody()->getContents());
-                if(sizeof($response) > 0) {
-                    $response = $response[0]->tier." ".$response[0]->rank;
-                }
+
             }
         } catch (\Exception $e) {
             $response = null;

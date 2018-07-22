@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">Dashboard</div>
 
@@ -19,7 +19,9 @@
                             Os dados de sua conta de League acabaram de ser atualizados!
                         </div>
                     @endif
-                    <new-match></new-match>
+                    <button class="btn btn-secondary btn-lg">Create match</button>
+                    <hr>
+                    <matches></matches>
                 </div>
             </div>
         </div>

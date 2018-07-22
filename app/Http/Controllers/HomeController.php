@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\UserConnected;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,7 @@ class HomeController extends Controller
     public function index()
     {
         $recuperou = false;
+
         if (empty(Auth::user()->league_profileiconid) || empty(Auth::user()->league_summonerlevel)) {
             $league = $this->league->getUserId(Auth::user()->league_name);
             if ($league["status"] == LeagueController::RESULTADO_OK) {

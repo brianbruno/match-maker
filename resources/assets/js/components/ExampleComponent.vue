@@ -7,6 +7,7 @@
 
                     <div class="card-body">
                         I'm an example component.
+                        <button v-on:click="click">Say What</button>
                     </div>
                 </div>
             </div>
@@ -18,6 +19,11 @@
     export default {
         mounted() {
             console.log('Component mounted.')
+        },
+        methods: {
+            click: function () {
+                console.log("Nova partida");
+            },
         }
     }
 </script>

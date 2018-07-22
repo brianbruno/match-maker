@@ -18,3 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/match/{match_id}', function ($match_id) {
+    return \App\Http\Controllers\MatchController::index($match_id);
+})->where('match_id', '[0-9]+')->name('match');

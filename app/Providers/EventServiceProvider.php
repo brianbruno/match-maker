@@ -19,6 +19,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\UserConnected' => [
             'App\Listeners\SendUserConnectedNotification',
         ],
+        'App\Events\MatchCreated' => [
+            'App\Listeners\SendMatchCreatedNotification',
+        ],
     ];
 
     /**
