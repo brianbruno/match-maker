@@ -402,110 +402,6 @@ module.exports = g;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(22);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(8);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(8);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  /**
-   * A timeout in milliseconds to abort a request. If set to 0 (default) a
-   * timeout is not created.
-   */
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -612,6 +508,110 @@ module.exports = function normalizeComponent (
   }
 }
 
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(22);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(8);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(8);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }),
 /* 4 */
@@ -13976,7 +13976,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(13);
-module.exports = __webpack_require__(51);
+module.exports = __webpack_require__(54);
 
 
 /***/ }),
@@ -14003,7 +14003,7 @@ window.Vue = __webpack_require__(39);
 Vue.component('example-component', __webpack_require__(42));
 Vue.component('queue', __webpack_require__(45));
 Vue.component('new-match', __webpack_require__(48));
-Vue.component('matches', __webpack_require__(56));
+Vue.component('matches', __webpack_require__(51));
 
 var app = new Vue({
   el: '#app'
@@ -35181,7 +35181,7 @@ module.exports = __webpack_require__(19);
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(6);
 var Axios = __webpack_require__(21);
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(3);
 
 /**
  * Create an instance of Axios
@@ -35264,7 +35264,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(3);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(30);
 var dispatchRequest = __webpack_require__(31);
@@ -35803,7 +35803,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(32);
 var isCancel = __webpack_require__(10);
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(3);
 var isAbsoluteURL = __webpack_require__(33);
 var combineURLs = __webpack_require__(34);
 
@@ -52413,7 +52413,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(43)
 /* template */
@@ -52533,7 +52533,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(46)
 /* template */
@@ -52739,7 +52739,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(49)
 /* template */
@@ -53003,24 +53003,14 @@ if (false) {
 
 /***/ }),
 /* 51 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(57)
+var __vue_script__ = __webpack_require__(52)
 /* template */
-var __vue_template__ = __webpack_require__(58)
+var __vue_template__ = __webpack_require__(53)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -53059,7 +53049,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 57 */
+/* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53094,56 +53084,65 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
+    created: function created() {
+        this.retrieveChannels();
     },
     data: function data() {
         return {
-            matches: [{
-                name: 'Brucer',
-                imgPreview: 'multiple',
-                users: 5,
-                desc: 'Partida de treinamento da equipe Team One.',
-                images: ['http://ddragon.leagueoflegends.com/cdn/8.14.1/img/profileicon/1.png', 'http://ddragon.leagueoflegends.com/cdn/8.14.1/img/profileicon/2074.png', 'http://ddragon.leagueoflegends.com/cdn/8.14.1/img/profileicon/2077.png', 'http://ddragon.leagueoflegends.com/cdn/8.14.1/img/profileicon/2076.png']
-            }, {
-                name: 'Jovirone',
-                imgPreview: 'single',
-                users: 3,
-                desc: 'Fila para jogar com o streamer Jovirone na live do dia 25/07/2018.',
-                images: ['http://ddragon.leagueoflegends.com/cdn/8.14.1/img/profileicon/1633.png']
-            }, {
-                name: 'Jovirone',
-                imgPreview: 'single',
-                users: 3,
-                desc: 'Fila para jogar com o streamer Jovirone na live do dia 25/07/2018.',
-                images: ['http://ddragon.leagueoflegends.com/cdn/8.14.1/img/profileicon/1633.png']
-            }, {
-                name: 'Jovirone',
-                imgPreview: 'single',
-                users: 3,
-                desc: 'Fila para jogar com o streamer Jovirone na live do dia 25/07/2018.',
-                images: ['http://ddragon.leagueoflegends.com/cdn/8.14.1/img/profileicon/1633.png']
-            }, {
-                name: 'Jovirone',
-                imgPreview: 'single',
-                users: 3,
-                desc: 'Fila para jogar com o streamer Jovirone na live do dia 25/07/2018.',
-                images: ['http://ddragon.leagueoflegends.com/cdn/8.14.1/img/profileicon/1633.png']
-            }]
+            matches: [],
+            status: 50
         };
     },
 
     methods: {
         click: function click() {
             console.log("Nova partida");
+        },
+        retrieveChannels: function retrieveChannels() {
+            self = this;
+            self.matches = [];
+            axios.get('/getchannels').then(function (response) {
+                self.status = response.data.status;
+                if (response.data.status === 200) {
+                    response.data.canais.forEach(function (item) {
+                        self.matches.push(item);
+                    });
+                }
+            }).catch(function (error) {
+                console.log(error);
+            }).finally(function () {
+                // console.log(self.matches);
+            });
         }
     }
 });
 
 /***/ }),
-/* 58 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -53151,102 +53150,134 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c(
-      "div",
-      { staticClass: "card-deck" },
-      _vm._l(_vm.matches, function(match) {
-        return _c("div", { staticClass: "card" }, [
-          match.imgPreview === "multiple"
-            ? _c(
-                "div",
-                {
-                  staticClass:
-                    "d-flex flex-row justify-content-center card-img-top"
-                },
-                [
-                  _c("div", { staticClass: "d-flex flex-column" }, [
-                    _c("img", {
-                      staticClass: "img-fluid",
-                      attrs: { src: match.images[0] }
-                    }),
+    _c("div", { staticClass: "card-deck" }, [
+      _c(
+        "div",
+        { staticClass: "row" },
+        _vm._l(_vm.matches, function(match) {
+          return _c("div", { staticClass: "col-sm-6" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-4" }, [
+                    match.images.length >= 4
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "d-flex flex-row justify-content-center card-img-top"
+                          },
+                          [
+                            _c("div", { staticClass: "d-flex flex-column" }, [
+                              _c("img", {
+                                staticClass: "img-fluid",
+                                attrs: { src: match.images[0] }
+                              }),
+                              _vm._v(" "),
+                              _c("img", {
+                                staticClass: "img-fluid",
+                                attrs: { src: match.images[1] }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "d-flex flex-column" }, [
+                              _c("img", {
+                                staticClass: "img-fluid",
+                                attrs: { src: match.images[2] }
+                              }),
+                              _vm._v(" "),
+                              _c("img", {
+                                staticClass: "img-fluid",
+                                attrs: { src: match.images[3] }
+                              })
+                            ])
+                          ]
+                        )
+                      : _vm._e(),
                     _vm._v(" "),
-                    _c("img", {
-                      staticClass: "img-fluid",
-                      attrs: { src: match.images[1] }
-                    })
+                    match.images.length === 1
+                      ? _c("div", { staticClass: "justify-content-center" }, [
+                          _c("img", {
+                            staticClass: "card-img-top",
+                            staticStyle: {
+                              "max-width": "100%",
+                              "max-height": "100%"
+                            },
+                            attrs: {
+                              src: match.images[0],
+                              alt: "Card image cap"
+                            }
+                          })
+                        ])
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "d-flex flex-column" }, [
-                    _c("img", {
-                      staticClass: "img-fluid",
-                      attrs: { src: match.images[2] }
-                    }),
+                  _c("div", { staticClass: "col-md-8" }, [
+                    _c("div", { staticClass: "justify-content-center" }, [
+                      _c("h5", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(match.name) + " Match "),
+                        _c(
+                          "span",
+                          {
+                            staticClass: "badge badge-pill text-right",
+                            class: {
+                              "badge-success": match.users < 5,
+                              "badge-warning": match.users >= 5
+                            }
+                          },
+                          [_vm._v(_vm._s(match.users))]
+                        )
+                      ])
+                    ]),
                     _vm._v(" "),
-                    _c("img", {
-                      staticClass: "img-fluid",
-                      attrs: { src: match.images[3] }
-                    })
+                    _c("div", { staticClass: "justify-content-left" }, [
+                      _c("p", { staticClass: "card-text" }, [
+                        _vm._v(_vm._s(match.desc))
+                      ])
+                    ])
                   ])
-                ]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          match.imgPreview === "single"
-            ? _c("div", { staticClass: "justify-content-center" }, [
-                _c("img", {
-                  staticClass: "card-img-top",
-                  staticStyle: { "max-width": "65%", "max-height": "65%" },
-                  attrs: { src: match.images[0], alt: "Card image cap" }
-                })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-footer" }, [
+                _c("a", { attrs: { href: match.link } }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn btn-outline-success btn-lg btn-block btn-sm",
+                      attrs: { type: "button" }
+                    },
+                    [_vm._v("Join")]
+                  )
+                ])
               ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("h5", { staticClass: "card-title" }, [
-              _vm._v(_vm._s(match.name) + " Match "),
-              _c(
-                "span",
-                {
-                  staticClass: "badge badge-pill text-right",
-                  class: {
-                    "badge-success": match.users < 5,
-                    "badge-warning": match.users >= 5
-                  }
-                },
-                [_vm._v(_vm._s(match.users))]
-              )
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text" }, [_vm._v(_vm._s(match.desc))])
-          ]),
-          _vm._v(" "),
-          _vm._m(0, true)
+            ])
+          ])
+        })
+      )
+    ]),
+    _vm._v(" "),
+    _vm.status === 50
+      ? _c("div", { staticClass: "col-sm-12 d-flex justify-content-center" }, [
+          _c("h1", [_vm._v("Loading...")])
         ])
-      })
-    )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.status === 100
+      ? _c("div", { staticClass: "col-sm-12 d-flex justify-content-center" }, [
+          _c("h1", [_vm._v("Looks like there's no match...")])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.status === 0
+      ? _c("div", { staticClass: "col-sm-12 d-flex justify-content-center" }, [
+          _c("h1", [_vm._v("Oops! ... I Dit It Again")])
+        ])
+      : _vm._e()
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-success btn-lg btn-block btn-sm",
-          attrs: { type: "button" }
-        },
-        [_vm._v("Join")]
-      ),
-      _vm._v(" "),
-      _c("small", { staticClass: "text-muted" }, [
-        _vm._v("Last updated 3 mins ago")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -53255,6 +53286,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-cdff02e8", module.exports)
   }
 }
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
