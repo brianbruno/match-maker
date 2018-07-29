@@ -64,20 +64,22 @@ class HomeController extends Controller
             foreach ($channelNames as $name) {
                 $idOwner = substr($name, strlen(self::DEFAULT_CHANNEL_NAME), strlen($name));
                 $userOwner = User::find($idOwner);
-                $info = $this->pusher->get( '/channels/'.$name.'/users');
-                $qntUsers = sizeof($info['result']['users']);
-                $icones = array();
-                foreach ($info['result']['users'] as $usuario) {
-                    $usuarioAux = User::find($usuario['id']);
-                    $icones[] =  self::DEFAULT_ICON_LOL_URL.$usuarioAux->league_profileiconid.".png";
+                if (isset($userOwner)) {
+                    $info = $this->pusher->get('/channels/' . $name . '/users');
+                    $qntUsers = sizeof($info['result']['users']);
+                    $icones = array();
+                    foreach ($info['result']['users'] as $usuario) {
+                        $usuarioAux = User::find($usuario['id']);
+                        $icones[] = self::DEFAULT_ICON_LOL_URL . $usuarioAux->league_profileiconid . ".png";
+                    }
+                    $canais[] = array(
+                        'name' => $userOwner->name,
+                        'users' => $qntUsers,
+                        'desc' => "Partida de " . $userOwner->name,
+                        'link' => 'match/' . $idOwner,
+                        'images' => $icones
+                    );
                 }
-                $canais[] = array(
-                    'name'      => $userOwner->name,
-                    'users'     => $qntUsers,
-                    'desc'      => "Partida de ".$userOwner->name,
-                    'link'      => 'match/'.$idOwner,
-                    'images'    => $icones
-                );
             }
             if (sizeof($canais) > 0) {
                 $return["status"] = 200;
@@ -87,6 +89,10 @@ class HomeController extends Controller
             }
         } catch (\Exception $e) {
             // notihing
+            $return["error"] = $e->getMessage();
+            $return["stack"] = $e->getTraceAsString();
+            $return["file"]  = $e->getFile();
+            $return["line"]  = $e->getLine();
         }
         return $return;
     }

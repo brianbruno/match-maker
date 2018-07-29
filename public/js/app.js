@@ -53195,7 +53195,7 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    match.images.length === 1
+                    match.images.length < 4
                       ? _c("div", { staticClass: "justify-content-center" }, [
                           _c("img", {
                             staticClass: "card-img-top",

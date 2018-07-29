@@ -20,7 +20,7 @@
                         </div>
                     @endif
                     <div class="d-flex justify-content-center">
-                        <button class="btn btn-secondary btn-lg">Create match</button>
+                        <a href="{{ url('match/'.Auth::user()->id) }}"><button class="btn btn-secondary btn-lg">Create match</button></a>
                     </div>
                     <hr>
                     <matches></matches>

@@ -17,7 +17,7 @@
                                             <img :src="match.images[3]" class="img-fluid">
                                         </div>
                                     </div>
-                                    <div v-if="match.images.length === 1" class="justify-content-center">
+                                    <div v-if="match.images.length < 4" class="justify-content-center">
                                         <img style="max-width: 100%; max-height: 100%" class="card-img-top" :src="match.images[0]" alt="Card image cap">
                                     </div>
                                 </div>
