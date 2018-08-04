@@ -21,6 +21,7 @@
                     @endif
                     <div class="d-flex justify-content-center">
                         <a href="{{ url('match/'.Auth::user()->id) }}"><button class="btn btn-secondary btn-lg">Create match</button></a>
+                        <a href="{{ url('matchinfo') }}"><button class="btn btn-info btn-lg text-white">Match info</button></a>
                     </div>
                     <hr>
                     <matches></matches>

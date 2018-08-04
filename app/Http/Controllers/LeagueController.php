@@ -150,8 +150,42 @@ class LeagueController extends Controller
         return $response;
     }
 
+    public function getMatches($matchid) {
+        $user = Auth::user();
+        $accountid = $user->league_accountid;
+
+        $response = null;
+        if (empty($matchid)) {
+            $url = self::BASE_URL . "/match/v3/matchlists/by-account/" . $accountid . "?queue=420";
+        } else {
+            $url = self::BASE_URL . "/match/v3/matches/" . $matchid;
+        }
+        $headers = ['headers' => [
+            'Origin' => 'http://match.maker',
+            'Accept-Charset' => 'application/x-www-form-urlencoded; charset=UTF-8',
+            "Accept-Language" => "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            'X-Riot-Token' => LeagueController::apikey()
+        ]
+        ];
+        $client = new Client();
+        try {
+            $response = $client->request('GET', $url, $headers);
+            if ($response->getStatusCode() == 200) {
+                $response = json_decode($response->getBody()->getContents());
+            }
+        } catch (\Exception $e) {
+            $response = null;
+        }
+        return $response;
+
+    }
+
     private static function apikey() {
         return env('LEAGUE_KEY');
+    }
+
+    private static function url() {
+        return env('APP_URL');
     }
 
 

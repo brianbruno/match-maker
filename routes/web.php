@@ -32,3 +32,7 @@ Route::get('/getchannels', function() {
     $result = $home->retrieveUserChannels();
     return $result;
 });
+
+Route::get('/matchinfo', 'MatchInfoController@index')->name('matchinfo')->middleware('auth');
+
+Route::post('/matchinfo', 'MatchInfoController@checkUsername')->name('checkgames')->middleware('auth');
