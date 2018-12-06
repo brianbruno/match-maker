@@ -6,6 +6,8 @@ use App\Http\Controllers\LeagueController;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StatusSemanal;
 
 class User extends Authenticatable
 {
@@ -77,5 +79,10 @@ class User extends Authenticatable
     private static function apikey() {
         return env('LEAGUE_KEY');
     }
+  
+  public function sendStatus() {
+    $resposta = $this->getWinLosses();
+    Mail::to($this)->send(new StatusSemanal($resposta));
+  }
 
 }
