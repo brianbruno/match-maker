@@ -1,18 +1,19 @@
 <?php
 /**
- * Created by IntelliJ IDEA.
+ * Created by PhpStorm.
  * User: brian
- * Date: 22/07/2018
- * Time: 15:31
+ * Date: 06/12/2018
+ * Time: 21:45
  */
 
 namespace App\Http\Controllers;
 
 
-use App\Notifications\SalaCriada;
+use App\Interfaces\League;
 use Illuminate\Support\Facades\Auth;
 
-class MatchController extends Controller {
+class PerfilController extends Controller {
+
     /**
      * Create a new controller instance.
      *
@@ -29,10 +30,8 @@ class MatchController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public static function index($match_id) {
-        $user = Auth::user();
-        $user->notify(new SalaCriada($user));
-        return view('match', ["match_id" => $match_id]);
+    public static function index() {
+        return view('user.perfil', ['user' => Auth::user()]);
     }
 
 }
