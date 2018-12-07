@@ -4,6 +4,7 @@ namespace App\Interfaces;
 
 use App\Http\Controllers\Controller;
 use App\UserMatch;
+use App\UserRank;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,7 +31,10 @@ class League extends Controller
                 $response = json_decode($response->getBody()->getContents());
             }
         } catch (\Exception $e) {
-            $response = null;
+            $response = array("status" => array(
+                "message" => $e->getMessage(),
+                "status_code" => $e->getCode()
+            ));
         }
         return $response;
     }
@@ -65,6 +69,21 @@ class League extends Controller
 
         }
 
+    }
+
+    public function atualizarRanks($user) {
+        $url = self::BASE_URL . "/league/v3/positions/by-summoner/".$user->league_id;
+        $ranks = $this->consultarAPI($url);
+
+        foreach ($ranks as $rank) {
+            $elo = UserRank::where("league_id", "=", $user->league_id)
+                ->where("queueType", "=", $rank->queueType)
+                ->where()->get();
+
+            if (empty($elo)) {
+                $novoRank = new UserRank();
+            }
+        }
     }
 
     private static function apikey() {

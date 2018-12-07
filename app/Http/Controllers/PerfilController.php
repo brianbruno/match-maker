@@ -31,6 +31,8 @@ class PerfilController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public static function index() {
+        $league = new League();
+        $league->atualizarRanks(Auth::user());
         return view('user.perfil', ['user' => Auth::user()]);
     }
 

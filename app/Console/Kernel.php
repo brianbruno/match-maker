@@ -26,6 +26,18 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+         $schedule->command('league:partidas')
+                  ->dailyAt('05:00');
+
+        $schedule->command('league:partidas')
+                 ->dailyAt('13:00');
+
+        $schedule->command('league:partidas')
+                 ->dailyAt('18:00');
+
+        $schedule->command('league:partidas')
+                 ->dailyAt('23:00');
     }
 
     /**

@@ -13,7 +13,7 @@ class BuscarPartidas extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'league:partidas';
 
     /**
      * The console command description.
@@ -43,7 +43,6 @@ class BuscarPartidas extends Command
 
         foreach ($users as $user) {
             $league->atualizarPartidas($user);
-//            $user->recuperarPartidas();
         }
 
     }
