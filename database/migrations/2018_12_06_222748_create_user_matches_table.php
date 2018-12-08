@@ -17,7 +17,7 @@ class CreateUserMatchesTable extends Migration
             $table->increments('id');
             $table->string('league_id', 100);
             $table->string("platformId", 20); // "BR1"
-            $table->integer("gameId")->unique();; // 1439202755
+            $table->integer("gameId"); // 1439202755
             $table->integer("champion"); // 25
             $table->integer("queue"); // 420
             $table->integer("season"); // 11
@@ -26,6 +26,8 @@ class CreateUserMatchesTable extends Migration
             $table->string("lane", 20); // "BOTTOM"
             $table->timestamps();
             $table->foreign('league_id')->references('league_id')->on('users');
+
+            $table->unique(['league_id', 'gameId']);
         });
     }
 

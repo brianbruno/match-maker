@@ -19,6 +19,11 @@ class CreateUsersTable extends Migration
                 $table->string('name');
                 $table->string('email', 100)->unique();
                 $table->string('password');
+                $table->string('league_id', 100)->unique();
+                $table->string('league_accountid')->nullable();
+                $table->string('league_name')->nullable();
+                $table->string('league_profileiconid')->nullable();
+                $table->string('league_summonerlevel')->nullable();
                 $table->rememberToken();
                 $table->timestamps();
             });

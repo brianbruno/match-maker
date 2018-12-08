@@ -6,14 +6,14 @@ use App\Interfaces\League;
 use App\User;
 use Illuminate\Console\Command;
 
-class BuscarPartidas extends Command
+class AtualizarInformacoes extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'league:partidas';
+    protected $signature = 'league:atualizar';
 
     /**
      * The console command description.
@@ -42,7 +42,9 @@ class BuscarPartidas extends Command
         $league = new League();
 
         foreach ($users as $user) {
+            $league->atualizarPerfil($user);
             $league->atualizarPartidas($user);
+            $league->atualizarRanks($user);
         }
 
     }
