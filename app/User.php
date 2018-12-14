@@ -79,10 +79,10 @@ class User extends Authenticatable
     private static function apikey() {
         return env('LEAGUE_KEY');
     }
-  
-  public function sendStatus() {
-    $resposta = $this->getWinLosses();
-    Mail::to($this)->send(new StatusSemanal($resposta));
-  }
+
+    public function sendStatus() {
+        $resposta = $this->getWinLosses();
+        Mail::to($this)->send(new StatusSemanal($resposta));
+    }
 
 }

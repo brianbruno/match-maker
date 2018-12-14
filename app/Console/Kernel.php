@@ -26,6 +26,18 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+         $schedule->command('league:atualizar')
+                  ->dailyAt('05:00');
+
+        $schedule->command('league:atualizar')
+                 ->dailyAt('13:00');
+
+        $schedule->command('league:atualizar')
+                 ->dailyAt('18:00');
+
+        $schedule->command('league:atualizar')
+                 ->dailyAt('23:00');
     }
 
     /**

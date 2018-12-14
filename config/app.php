@@ -161,6 +161,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Thujohn\Twitter\TwitterServiceProvider::class,
 
+        NotificationChannels\Telegram\TelegramServiceProvider::class,
+
     ],
 
     /*

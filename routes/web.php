@@ -19,6 +19,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/perfil', 'PerfilController@index')->name('perfil');
+
 Route::get('/match/{match_id}', function ($match_id) {
     if (!empty( \App\User::find($match_id) )) {
         return \App\Http\Controllers\MatchController::index($match_id);

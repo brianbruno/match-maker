@@ -14,11 +14,7 @@ class AddLeagueinfoToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('league_id', 100)->unique();
-            $table->string('league_accountid')->nullable();
-            $table->string('league_name')->nullable();
-            $table->string('league_profileiconid')->nullable();
-            $table->string('league_summonerlevel')->nullable();
+
 
         });
     }
